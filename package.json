@@ -1,0 +1,35 @@
+{
+  "name": "wirtanen-demo",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.2",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "glamor": "^2.20.40",
+    "glamorous": "^4.12.0",
+    "massive": "^4.7.0",
+    "passport": "^0.4.0",
+    "passport-auth0": "^0.6.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.1",
+    "react-sound": "^1.1.0",
+    "react-typed": "^1.0.8",
+    "redux": "^3.7.2",
+    "redux-promise-middleware": "^5.0.0",
+    "underscore": "^1.8.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "main": "server/index.js",
+  "proxy": "http://localhost:9000/"
+}
