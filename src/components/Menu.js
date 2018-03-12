@@ -29,7 +29,6 @@ function Menu(props){
         userSelect: 'none',
         color: 'black',
         display: 'inline-block',
-        width: '100px',
         fontSize: '50px',
         fontFamily: 'Bellefair',
         fontWeight: 'bold',
@@ -51,10 +50,10 @@ function Menu(props){
 
     return (
         <Wrapper>
-            <MenuItem className={`${hoverChange}`} >Gallery</MenuItem>
-            <MenuItem className={`${hoverChange}`}>Config</MenuItem>
-            <MenuItem><Link onClick={props.resetGame} className={`${resetLink} ${hoverChange}`} to='/prologue'>Restart</Link></MenuItem>
+            <MenuItem><Link onClick={props.resetGame} className={`${resetLink} ${hoverChange}`} to='/prologue'>New Game</Link></MenuItem>
             <MenuItem className={`${hoverChange}`}>Load</MenuItem>
+            <MenuItem className={`${hoverChange}`}>Config</MenuItem>
+            <MenuItem onClick={() => this.props.history.push('/start')} className={`${hoverChange}`} >Main Menu</MenuItem>
             <MenuItem><a className={`${resetLink} ${hoverChange}`} href='http://localhost:9000/auth/logout' >Logout</a></MenuItem>
         </Wrapper>
     )

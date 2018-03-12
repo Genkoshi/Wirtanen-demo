@@ -5,7 +5,7 @@ import {css} from 'glamor';
 import {updateFirst, updateLast} from '../ducks/game_reducer';
 
 function CharacterName(props){
-    const {updateFirst, updateLast} = props;
+    const {updateFirst, updateLast, firstName, lastName} = props;
     const label = css({
         marginRight: '10px'
     })
@@ -26,7 +26,6 @@ function CharacterName(props){
         background: 'transparent',
         borderBottom: '2px solid white',
         color: 'white',
-        background: 'none',
         textAlign: 'center'
     })
     return (
@@ -35,11 +34,11 @@ function CharacterName(props){
         <div className={`${wrapper}`}>
             <div className={`${flex}` } style={fRow} >
                 <section className={`${label}`} >First:</section>
-                <input className={`${inputStyle}`} size='10' maxLength='10' value={props.firstName} onChange={e =>  updateFirst(e.target.value)} type='text'></input>
+                <input className={`${inputStyle}`} size='10' maxLength='10' value={firstName} onChange={e =>  updateFirst(e.target.value)} type='text'></input>
            </div>
            <div className={`${flex}`} style={fRow} >
                 <section className={`${label}`  } >Last:</section>
-                <input className={`${inputStyle}`} size='10' maxLength='10' value={props.lastName} onChange={e => updateLast(e.target.value)} type='text'></input>
+                <input className={`${inputStyle}`} size='10' maxLength='10' value={lastName} onChange={e => updateLast(e.target.value)} type='text'></input>
             </div>
         </div>
         </div>

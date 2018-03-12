@@ -7,7 +7,8 @@ const GET_USER = 'GET_USER'
     , GET_SAVES = 'GET_SAVES'
     , GET_MOST_RECENT = 'GET_MOST_RECENT'
     , RESET_PROLOGUE = 'RESET_PROLOGUE'
-    , RESET_GAME = 'RESET_GAME';
+    , RESET_GAME = 'RESET_GAME'
+    , UPDATE_GENDER = 'UPDATE_GENDER';
 
 export function updateFirst(name){
     return {
@@ -64,6 +65,13 @@ export function resetGame(){
     }
 }
 
+export function updateGender(gender){
+    return {
+        type: UPDATE_GENDER,
+        payload: gender
+    }
+}
+
 export default function reducer(state = initialState, action){
     switch(action.type){
         case GET_USER + _FULFILLED:
@@ -82,6 +90,8 @@ export default function reducer(state = initialState, action){
             return Object.assign({}, state, {prologue: action.payload});
         case RESET_GAME:
                 return Object.assign({}, state, initialState, {user: state.user}); 
+        case UPDATE_GENDER: 
+                return Object.assign({}, state, {gender: action.payload});
         default: return state;
     }
 }

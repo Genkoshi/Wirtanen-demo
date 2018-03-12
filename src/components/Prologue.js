@@ -1,9 +1,13 @@
 import React, {Component} from 'react';
 import 'glamor/reset';
 import {css} from 'glamor';
+import glamorous from 'glamorous';
 import CharacterName from './CharacterName';
+import CharSelect from './CharSelect';
+import {connect} from 'react-redux';
 
-export default class Prologue extends Component{
+
+class Prologue extends Component{
     constructor(){
         super()
 
@@ -13,7 +17,9 @@ export default class Prologue extends Component{
                 <div>This is the prologue...</div>,
                 <div>Some more text goes here...</div>,
                 <div>End of testing exposition!</div>,
-                <CharacterName></CharacterName>
+                <CharacterName></CharacterName>,
+                <CharSelect></CharSelect>
+
             ]
         }
     }
@@ -30,20 +36,8 @@ export default class Prologue extends Component{
     }
 
     render(){
-        const continueAnim = css.keyframes({
-            '0%': {opacity: 0},
-            '50%': {opacity: 1},
-            '100%': {opacity: 0}
-        })
-        const bcontinue = css({
-            height: '35px',
-            width: '35px',
-            backgroundColor: 'darkblue',
-            borderRadius: '25px',
-            cursor: 'pointer',
-            animation: `${continueAnim} 1.8s infinite`, /* IE 10+, Fx 29+ */            
-        })
-
+        const {firstName, lastName} = this.props;
+        const {dialoguePlace, dialogue} = this.state;
         const vignetteAnim = css.keyframes({
             '0% , 100%':   { opacity: 1 },
             '50%': { opacity: 0.7 },
@@ -64,7 +58,6 @@ export default class Prologue extends Component{
             textAlign: 'center',
             fontSize: '50px',
             fontFamily: 'Bellefair',
-            ':focus': 'none'
         })
 
         const vignette = css({
@@ -76,17 +69,38 @@ export default class Prologue extends Component{
             animation: `${vignetteAnim} 4s infinite`, /* IE 10+, Fx 29+ */
 
         })
+        const render = css({
+            display: 'flex',
+            zIndex: 10,
+            alignItems: 'center',
+            flexDirection: 'column',
+            jutifyContent: 'center',
+        })
+        const SubmitButton = glamorous.div({
+            width: '200px',
+            height: '80px',
+            backgroundColor: 'blue',
+            color: 'white',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '50px',
+            borderRadius: '20px',
+            cursor: 'pointer',
+            marginTop: '50px'
+        })
         return (
-            <main autoFocus tabIndex='0' onKeyDown={this.onKeyPress} className={`${mainContent}`}>
+            <main tabIndex='0' onKeyDown={this.onKeyPress} className={`${mainContent}`}>
 
-                <div style={{
-                    display: 'flex',
-                    zIndex: 10,
-                    alignItems: 'flex-end'
-                }}>
-                {this.state.dialogue[this.state.dialoguePlace]}
-                { this.state.dialoguePlace < 3 ? 
-                <section className={`${bcontinue}`} onClick={this.dialogueInc} ></section> : null}
+                <div className={`${render}`}>
+                {dialogue[dialoguePlace]}
+                {dialoguePlace === 3 ? 
+                    <SubmitButton onClick={() => {
+                        if(firstName.replace(/\s/g, '').length && lastName.replace(/\s/g, '').length){
+                            this.dialogueInc()
+                            }
+                        }
+                    } >SUBMIT</SubmitButton> : null }
                 </div>
 
                 <div className={`${vignette}`} ></div>
@@ -94,3 +108,12 @@ export default class Prologue extends Component{
         )
     }
 }
+
+function mapStateToProps(state){
+    return {
+        firstName: state.firstName,
+        lastName: state.lastName
+    }
+}
+
+export default connect(mapStateToProps)(Prologue)

@@ -1,1 +1,1 @@
-My personal project at DevMountain. This is a short demo of a visual novel built directly into the browser/no downloads. The protagonis must solve a mystery behind a supernatual event.
+My personal project at DevMountain. This is a short demo of a visual novel built directly into the browser/no downloads. The protagonis must solve a mystery behind a supernatural event.
