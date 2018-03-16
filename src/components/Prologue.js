@@ -34,12 +34,31 @@ class Prologue extends Component{
                 this.dialogueInc();
             }
     }
+    onMouseDown = (event) => {
+        if (this.state.dialoguePlace < 3){
+            this.dialogueInc();
+        }
+    }
+    canSubmit = (firstName, lastName) => {
+        if(firstName.replace(/\s/g, '').length && lastName.replace(/\s/g, '').length){
+        return {
+            filter: 'brightness(100%)',
+            width: '200px',
+            height: '80px',
+            fontSize: '45px',
+            marginTop: '50px',
+            cursor: 'pointer',
+        }
+    }else return {}
+    }
 
     componentDidMount() {
         document.addEventListener("keydown", this.onKeyPress, false);
+        document.addEventListener("mousedown", this.onMouseDown, false);
       }
       componentWillUnmount() {
         document.removeEventListener("keydown", this.onKeyPress, false);
+        document.removeEventListener("mousedown", this.onMouseDown, false);
       }
     
 
@@ -94,17 +113,10 @@ class Prologue extends Component{
             alignItems: 'center',
             fontSize: '40px',
             borderRadius: '20px',
-            cursor: 'pointer',
             marginTop: '58px',
             filter: 'brightness(50%)',
             transition: '.5s',
-            ':hover': {
-                filter: 'brightness(100%)',
-                width: '200px',
-                height: '80px',
-                fontSize: '45px',
-                marginTop: '50px'
-            }
+            ':hover': this.canSubmit(firstName, lastName)
         })
         return (
             <main /*tabIndex='0' onKeyDown={this.onKeyPress}*/ className={`${mainContent}`}>

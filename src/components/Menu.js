@@ -50,11 +50,19 @@ function Menu(props){
 
     return (
         <Wrapper>
-            <MenuItem><Link onClick={props.resetGame} className={`${resetLink} ${hoverChange}`} to='/prologue'>New Game</Link></MenuItem>
+            <MenuItem>
+                <Link onClick={props.resetGame} className={`${resetLink} ${hoverChange}`} to='/prologue'>New Game</Link>
+            </MenuItem>
+
             <MenuItem className={`${hoverChange}`}>Load</MenuItem>
+
             <MenuItem className={`${hoverChange}`}>Config</MenuItem>
+
             <MenuItem onClick={() => props.history.push('/start')} className={`${hoverChange}`} >Main Menu</MenuItem>
-            <MenuItem><a className={`${resetLink} ${hoverChange}`} href='http://localhost:9000/auth/logout' >Logout</a></MenuItem>
+            
+            <MenuItem>
+                <a className={`${resetLink} ${hoverChange}`} href='http://localhost:9000/auth/logout' >Logout</a>
+            </MenuItem>
         </Wrapper>
     )
 }

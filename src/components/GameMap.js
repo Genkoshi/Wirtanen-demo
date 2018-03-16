@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import MainCharacter from './MainCharacter';
 import Navbar from './Navbar';
 import {css} from 'glamor';
-import map from './art/Map.png';
+import map from './art/map.png';
 import {withRouter} from 'react-router-dom';
 
 class GameMap extends Component{
@@ -21,26 +21,25 @@ class GameMap extends Component{
     render(){
         let {gridArea} = this.props
         const backMap = css({
-            height: 'calc(100vh - 80px)',
-            width: '100%',
+            height: '655px',
+            width: '1520px',
             zIndex: '-10',
             position: 'absolute',
-            top:'80px',            
+            top:'79px',            
             backgroundImage: `url(${map})`,
             backgroundPosition: 'center',
-            backgroundSize: 'auto',
             backgroundRepeat: 'no-repeat',
             backgroundColor: 'black',
         })
-        const MyMapGrid = glamorous.div({
-            height: 'calc(100vh - 100px)',
+        const MapGrid = glamorous.div({
+            height: '655px',
             color: 'white',
             boxSizing: 'border-box',
-            padding: '20px',
+            // padding: '20px',
             width: '40%',
-            marginLeft: '20%',
+            // marginLeft: '20%',
             display: 'grid',
-            marginTop: '100px',
+            // marginTop: '100px',
             // transform: 'rotate(-6deg)',
             gridTemplateAreas:`
             "aa ab ac ad"
@@ -49,14 +48,14 @@ class GameMap extends Component{
             `,
             '& > div':{
                 backgroundColor: 'purple',
-                height: '100px',
+                height: '50px',
                 width: '100px',
             },
         })
         return (
-            <div>
+            <div className={`${backMap}`} >
                 <Navbar />
-            <MyMapGrid>
+            <MapGrid>
                 {
                     // gridArea.map((area, index) => {
                     //     let ConComp = this.componentSelect(area.name)
@@ -67,11 +66,10 @@ class GameMap extends Component{
                     //     )
                     // })
                 }
-            </MyMapGrid>
-            <div className={backMap} />{/*needs to be H:655 W:1520*/}
+            </MapGrid>
+            {/* <div className={backMap} />needs to be H:655 W:1520 */}
             {console.log(this.props.gender)}
             </div>
-
         )
     }
 }
