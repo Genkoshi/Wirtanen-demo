@@ -43,7 +43,7 @@ function Menu(props){
     const hoverChange = css({
         transition: '.7s',
         ':hover':{
-            fontSize: '70px',
+            fontSize: '65px',
             color: 'gold'
         }
     })
@@ -53,7 +53,7 @@ function Menu(props){
             <MenuItem><Link onClick={props.resetGame} className={`${resetLink} ${hoverChange}`} to='/prologue'>New Game</Link></MenuItem>
             <MenuItem className={`${hoverChange}`}>Load</MenuItem>
             <MenuItem className={`${hoverChange}`}>Config</MenuItem>
-            <MenuItem onClick={() => this.props.history.push('/start')} className={`${hoverChange}`} >Main Menu</MenuItem>
+            <MenuItem onClick={() => props.history.push('/start')} className={`${hoverChange}`} >Main Menu</MenuItem>
             <MenuItem><a className={`${resetLink} ${hoverChange}`} href='http://localhost:9000/auth/logout' >Logout</a></MenuItem>
         </Wrapper>
     )

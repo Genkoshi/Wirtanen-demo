@@ -4,7 +4,7 @@ import {css} from 'glamor';
 import glamorous from 'glamorous';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {getMostRecent, getSaves} from '../ducks/game_reducer.js';
+import {getMostRecent, getSaves} from '../ducks/save_reducer.js';
 import {withRouter} from 'react-router-dom';
 
 
@@ -79,7 +79,7 @@ class Start extends Component{
                     <Logo className={`${flexCenter}`} >LOGO</Logo>
                     <MenuOptions className={`${flexCenter}`}>
                             {typeof this.props.saves !== 'undefined' && this.props.saves.length > 0 ?
-                            <MenuItem onMouseUp={() => {document.body.style.cursor='wait'; getMostRecent(user.id).then(res => this.props.history.push('/map'))}} >Continue</MenuItem>
+                            <MenuItem onMouseUp={() => { getMostRecent(user.id).then(res => this.props.history.push('/map'))}} >Continue</MenuItem>
                             : null}
                             
                             <MenuItem style={{color: this.state.menuItemColor[1]}} onMouseDown={() => this.menuItemWhite(1)} onMouseLeave={()=>this.menuItemBlack(1)} onMouseUp={() => {this.menuItemBlack(1); this.props.history.push('/prologue')}} >New Game</MenuItem>
@@ -103,8 +103,8 @@ let actions = {
 }
 function mapStateToProps(state){
      return {
-         user: state.user,
-         saves: state.saveLoadFiles
+         user: state.save.user,
+         saves: state.save.saves
      }
 }
 

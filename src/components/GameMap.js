@@ -9,11 +9,6 @@ import map from './art/Map.png';
 import {withRouter} from 'react-router-dom';
 
 class GameMap extends Component{
-
-    componentWillMount(){
-        document.body.style.cursor='default'
-    }
-
     
     componentSelect = (name) => {
         switch(name){
@@ -85,8 +80,8 @@ class GameMap extends Component{
 function mapStateToProps(state){
     return {
         gridArea: state.gridArea,
-        user: state.user,
-        gender: state.gender
+        user: state.save.user,
+        gender: state.game.gender
     };
 }
 

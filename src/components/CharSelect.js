@@ -60,9 +60,9 @@ function CharSelect(props){
 
 function mapStateToProps(state){
     return {
-        gender: state.gender,
-        firstName: state.firstName,
-        lastName: state.lastName
+        gender: state.game.gender,
+        firstName: state.game.firstName,
+        lastName: state.game.lastName
     }
 }
 

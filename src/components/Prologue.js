@@ -35,6 +35,14 @@ class Prologue extends Component{
             }
     }
 
+    componentDidMount() {
+        document.addEventListener("keydown", this.onKeyPress, false);
+      }
+      componentWillUnmount() {
+        document.removeEventListener("keydown", this.onKeyPress, false);
+      }
+    
+
     render(){
         const {firstName, lastName} = this.props;
         const {dialoguePlace, dialogue} = this.state;
@@ -77,20 +85,29 @@ class Prologue extends Component{
             jutifyContent: 'center',
         })
         const SubmitButton = glamorous.div({
-            width: '200px',
-            height: '80px',
-            backgroundColor: 'blue',
-            color: 'white',
+            width: '170px',
+            height: '72px',
+            backgroundColor: 'white',
+            color: 'black',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            fontSize: '50px',
+            fontSize: '40px',
             borderRadius: '20px',
             cursor: 'pointer',
-            marginTop: '50px'
+            marginTop: '58px',
+            filter: 'brightness(50%)',
+            transition: '.5s',
+            ':hover': {
+                filter: 'brightness(100%)',
+                width: '200px',
+                height: '80px',
+                fontSize: '45px',
+                marginTop: '50px'
+            }
         })
         return (
-            <main tabIndex='0' onKeyDown={this.onKeyPress} className={`${mainContent}`}>
+            <main /*tabIndex='0' onKeyDown={this.onKeyPress}*/ className={`${mainContent}`}>
 
                 <div className={`${render}`}>
                 {dialogue[dialoguePlace]}
@@ -111,8 +128,8 @@ class Prologue extends Component{
 
 function mapStateToProps(state){
     return {
-        firstName: state.firstName,
-        lastName: state.lastName
+        firstName: state.game.firstName,
+        lastName: state.game.lastName
     }
 }
 

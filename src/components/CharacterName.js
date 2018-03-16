@@ -52,8 +52,8 @@ let actions = {
 
 function mapStateToProps(state){
     return {
-        firstName: state.firstName,
-        lastName: state.lastName
+        firstName: state.game.firstName,
+        lastName: state.game.lastName
     }
 }
 

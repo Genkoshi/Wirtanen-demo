@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import 'glamor/reset';
 import glamorous from 'glamorous';
 import {connect} from 'react-redux';
-import {getUser, resetPrologue} from '../ducks/game_reducer';
+import {resetPrologue} from '../ducks/game_reducer';
+import {getUser} from '../ducks/save_reducer';
 import {Redirect} from 'react-router-dom';
 
 class Loading extends Component{
@@ -48,8 +49,8 @@ let actions = {
 
 function mapStateToProps(state){
     return {
-        user: state.user,
-        gender: state.gender
+        user: state.save.user,
+        gender: state.game.gender
     }
 }
 
