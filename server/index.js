@@ -79,9 +79,9 @@ app.get('/auth/logout', (req, res) => {
 
 app.get('/api/saves/:id', saves_ctrl.getAll )
 app.get('/api/mostRecentSave/:id', saves_ctrl.getNewest)
-app.put('/api/save/:id', saves_ctrl.update )
-app.post('/api/save', saves_ctrl.create )
-app.delete('/api/save/:id', saves_ctrl.delete )
+app.put('/api/updateSave/:saveID/:userID', saves_ctrl.update )
+app.post('/api/save/:id', saves_ctrl.create )
+app.delete('/api/deleteSave/:id', saves_ctrl.delete )
 
 
 

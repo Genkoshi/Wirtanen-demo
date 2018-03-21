@@ -22,6 +22,8 @@ export default class Navbar extends React.Component{
         alignItems: 'center',
         position: 'fixed',
         top: 0,
+        left: 0,
+        right: 0,
         paddingLeft: '20px',
         paddingRight: '20px',
         boxSizing: 'border-box'

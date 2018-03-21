@@ -1,11 +1,13 @@
 module.exports = {
     create: (req, res, next)  => {
         const db = req.app.get('db');
-        const {id} = req.body.user;
+        const {id} = req.params
 
-        db.creat_new_save([id, req.body])
+        db.create_new_save([id, req.body,new Date( Date.now())])
         .then( (created) => res.status(200).send(created) )
-        .catch( () => res.status(500).send() )
+        .catch( (err) => {
+            console.log(err)
+            res.status(500).send(err)} )
     },
     getNewest: (req, res, next) => {
         const db = req.app.get('db');
@@ -27,9 +29,11 @@ module.exports = {
         const db = req.app.get('db');
         const {params, body} = req;
 
-        db.update_save([params.id, body])
+        db.update_save([params.saveID, params.userID, body, new Date( Date.now())])
         .then((updated) => res.status(200).send(updated))
-        .catch(() => res.status(500).send())
+        .catch((err) => {
+            console.log(err)
+            res.status(500).send()})
     },
     delete: (req, res, next) => {
         const db = req.app.get('db');

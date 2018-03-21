@@ -71,16 +71,15 @@ export function updateGender(gender){
 const initialState = {
      choicesCounter: 0,
      gender: '',
-     firstName: '',
-     lastName: '',
+     firstName: 'Main',
+     lastName: 'Character',
      clues: [],
      gridArea:
-         [{position: 'aa', name: ''} ,{position: 'ab', name: ''} 
-        , {position: 'ac', name: ''} ,{position: 'ad', name: ''} 
-        , {position: 'ba', name: ''} ,{position: 'bb', name: ''} 
-        , {position: 'bc', name: ''} ,{position: 'bd', name: ''} 
-        , {position: 'ca', name: ''} ,{position: 'cb', name: ''} 
-        , {position: 'cc', name: ''} ,{position: 'cd', name: ''} ]
+         [{position: 'aa', name: ''} ,{position: 'ff', name: ''} 
+        , {position: 'bb', name: ''} ,{position: 'gg', name: ''} 
+        , {position: 'cc', name: ''} ,{position: 'hh', name: ''} 
+        , {position: 'dd', name: ''} ,{position: 'ii', name: ''} 
+        , {position: 'ee', name: ''} ,{position: 'jj', name: ''}]
 }
 
 //props.history.push() inside componentl
