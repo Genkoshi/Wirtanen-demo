@@ -75,7 +75,7 @@ const initialState = {
      lastName: 'Character',
      clues: [],
      gridArea:
-         [{position: 'aa', name: ''} ,{position: 'ff', name: ''} 
+         [{position: 'aa', name: 'Miya'} ,{position: 'ff', name: ''} 
         , {position: 'bb', name: ''} ,{position: 'gg', name: ''} 
         , {position: 'cc', name: ''} ,{position: 'hh', name: ''} 
         , {position: 'dd', name: ''} ,{position: 'ii', name: ''} 

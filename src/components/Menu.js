@@ -61,7 +61,7 @@ function Menu(props){
             <MenuItem onClick={() => props.history.push('/start')} className={`${hoverChange}`} >Main Menu</MenuItem>
             
             <MenuItem>
-                <a className={`${resetLink} ${hoverChange}`} href='http://localhost:9000/auth/logout' >Logout</a>
+                <a className={`${resetLink} ${hoverChange}`} href={process.env.REACT_APP_LOGOUT} >Logout</a>
             </MenuItem>
         </Wrapper>
     )

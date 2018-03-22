@@ -5,7 +5,7 @@ import glamorous from 'glamorous';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {getSaves} from '../ducks/save_reducer.js';
-import {updateState} from '../ducks/game_reducer';
+import {updateState, resetGame} from '../ducks/game_reducer';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 import logo from './art/logo.png'
@@ -17,7 +17,6 @@ class Start extends Component{
         super()
 
         this.state = {
-            menuItemColor: ['white', 'white', 'white', 'white', 'white']
         }
     }
 
@@ -96,7 +95,7 @@ class Start extends Component{
                             <MenuItem onMouseUp={() => { this.getMostRecent(user.id).then(res => this.props.history.push('/map'))}} >Continue</MenuItem>
                             : null}
                             
-                            <MenuItem onMouseUp={() => { this.props.history.push('/prologue')}} >New Game</MenuItem>
+                            <MenuItem onMouseUp={() => { this.props.resetGame();this.props.history.push('/prologue')}} >New Game</MenuItem>
 
                             {typeof this.props.saves !=='undefined' && this.props.saves.length > 0 ? 
                             <MenuItem>Load</MenuItem>
@@ -104,7 +103,7 @@ class Start extends Component{
 
                             <MenuItem>Options</MenuItem>
 
-                            <a style={{textDecoration: 'none', color: 'white'}} href='http://localhost:9000/auth/logout' ><MenuItem>Exit</MenuItem></a>
+                            <a style={{textDecoration: 'none', color: 'white'}} href={process.env.REACT_APP_LOGOUT} ><MenuItem>Exit</MenuItem></a>
                     </MenuOptions>
                     {console.log(this.props.user, this.props.saves)}
             </Background>
@@ -113,7 +112,8 @@ class Start extends Component{
 }
 let actions = {
     updateState,
-    getSaves
+    getSaves,
+    resetGame
 }
 function mapStateToProps(state){
      return {

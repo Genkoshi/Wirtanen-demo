@@ -29,7 +29,7 @@ module.exports = {
         const db = req.app.get('db');
         const {params, body} = req;
 
-        db.update_save([params.saveID, params.userID, body, new Date( Date.now())])
+        db.update_save([params.saveID, params.userID, body,new Date(Date.now())])
         .then((updated) => res.status(200).send(updated))
         .catch((err) => {
             console.log(err)
@@ -37,7 +37,7 @@ module.exports = {
     },
     delete: (req, res, next) => {
         const db = req.app.get('db');
-        const {params} = req;
+        const {params} = req
 
         db.delete_save([params.id])
         .then(() => res.status(200).send())

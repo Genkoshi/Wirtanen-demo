@@ -19,7 +19,20 @@ class GameMap extends Component{
         switch(name){
             case 'MainCharacter':
                 return MainCharacter
-            default: return 'div';
+            case 'Miya':
+                return {
+                    backgroundColor: 'pink',
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '70px',
+                    height: '120px', 
+                    ':hover':{
+                        cursor: 'pointer',
+                    }
+                }
+            default: return {};
         }       
     }
         
@@ -48,7 +61,6 @@ class GameMap extends Component{
             // transform: 'rotate(-6deg)',
             zIndex: '-10',
             gridTemplateAreas:`
-            
             ".. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .. .."
             ".. aa aa aa aa aa .. .. dd dd .. .. .. .. .. .. .."
             ".. aa aa aa aa aa .. .. dd dd .. .. .. .. .. .. .."
@@ -69,21 +81,23 @@ class GameMap extends Component{
             justifyContent: 'center',
             alignItems: 'center',
         })
+        
         return (
             <div className={`${backMap} ${center}`} >
                 <Navbar style={{zIndex: '10'}} />
             <MapGrid>
                 {
-                    // gridArea.map((area, index) => {
-                    //     let ConComp = this.componentSelect(area.name)
-                    //     return (
-                    //         <Div key={index} css={{opacity: .5, gridArea: area.position}}>
-                    //             <ConComp />
-                    //         </Div>
-                    //     )
-                    // })
+                    gridArea.map((area, index) => {
+                        let character = this.componentSelect(area.name);
+                        return (
+                            <Div key={index} className={`${center}`} css={{position: 'relative', gridArea: area.position}}>
+                                <Div onClick={() => this.props.history.push(`/scene/${area.name}`)} css={character} />
+                                {console.log(area.name)}
+                            </Div>
+                        )
+                    })
                 }
-                <Div css={{opacity: '.5', gridArea: 'aa', backgroundColor: 'blue'}}></Div>
+                {/* <Div css={{opacity: '.5', gridArea: 'aa', backgroundColor: 'blue'}}></Div>
                 <Div css={{opacity: '.5', gridArea: 'bb', backgroundColor: 'purple'}}></Div>
                 <Div css={{opacity: '.5', gridArea: 'cc', backgroundColor: 'green'}}></Div>
                 <Div css={{opacity: '.5', gridArea: 'dd', backgroundColor: 'yellow'}}></Div>
@@ -92,8 +106,8 @@ class GameMap extends Component{
                 <Div css={{opacity: '.5', gridArea: 'gg', backgroundColor: 'brown'}}></Div>
                 <Div css={{opacity: '.5', gridArea: 'hh', backgroundColor: 'black'}}></Div>
                 <Div css={{opacity: '.5', gridArea: 'ii', backgroundColor: 'gray'}}></Div>
-                <Div css={{opacity: '.5', gridArea: 'jj', backgroundColor: 'lime'}}></Div>                               
-
+                <Div css={{opacity: '.5', gridArea: 'jj', backgroundColor: 'lime'}}></Div>                                */}
+                {console.log(this.props)}
             </MapGrid>
             {/* <div className={backMap} />needs to be H:655 W:1520 */}
             {console.log(this.props.gender)}
@@ -105,7 +119,7 @@ class GameMap extends Component{
 
 function mapStateToProps(state){
     return {
-        gridArea: state.gridArea,
+        gridArea: state.game.gridArea,
         user: state.save.user,
         gender: state.game.gender
     };

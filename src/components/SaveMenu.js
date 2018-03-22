@@ -30,6 +30,7 @@ function SaveMenu(props){
         minHeight: '110px',
         width: '350px',
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: '20px',
@@ -68,12 +69,14 @@ function SaveMenu(props){
     const {saves, gameState, getSaves, addSave, user, replaceSave} = props;
 
     let saveList = saves.map((save, index) => {
-        let timeStamp = save.time_stamped;
-        let convertTime = timeStamp.replace('T', ' ').slice(0, 19).split(' ');
+        let timeStamp = new Date(save.time_stamped);
+        let {firstName, lastName} = save.save_load
         return (
             <SaveBox onClick={() => updateSave(save.id, user.id, gameState, replaceSave)} className={`${oldSave}`} key={index} >
-                <p>Save {index +1} - Date: {convertTime[0]} Time: {convertTime[1]}</p>
+                <div style={{marginBottom: '10px'}}>Save {index +1}</div>
+                <div>{firstName} {lastName} {timeStamp.toLocaleString()}</div>
                 <DeleteButton onClick={(e) => deleteSave(user, save.id, getSaves, e)} >X</DeleteButton>
+                {console.log(save)}
             </SaveBox>)
     })
     

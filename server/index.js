@@ -5,7 +5,8 @@ const express = require('express')
     , passport = require('passport')
     , massive = require('massive')
     , Auth0Strategy = require('passport-auth0')
-    , saves_ctrl = require('./controllers/savesController.js');
+    , saves_ctrl = require('./controllers/savesController.js')
+    , path = require('path');
 
 const {
     SERVER_PORT,
@@ -14,10 +15,15 @@ const {
     CLIENT_ID,
     CLIENT_SECRET,
     CALLBACK_URL,
-    CONNECTION_STRING
+    CONNECTION_STRING,
+    REACT_APP_LOGIN,
+    HOMEPAGE,
+    START_MENU
 } = process.env;
 
 const app = express();
+
+app.use(express.static(`${__dirname}/../build`));
 app.use(bodyParser.json());
 
 massive(CONNECTION_STRING).then(db => {
@@ -62,19 +68,19 @@ passport.deserializeUser((id, done) => {
 
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect: 'http://localhost:3000/start',
-    failureRedirect: 'http://localhost:9000/auth'
+    successRedirect: START_MENU,
+    failureRedirect: REACT_APP_LOGIN
 }))
 app.get('/auth/me', (req, res) => {
     if (req.user){
         res.status(200).send(req.user);
         }else {
-            res.redirect('http://localhost:3000/')
+            res.redirect(HOMEPAGE)
         }
 })
 app.get('/auth/logout', (req, res) => {
     req.logOut();
-    res.redirect('http://localhost:3000/');
+    res.redirect(HOMEPAGE);
 })
 
 app.get('/api/saves/:id', saves_ctrl.getAll )
@@ -83,6 +89,8 @@ app.put('/api/updateSave/:saveID/:userID', saves_ctrl.update )
 app.post('/api/save/:id', saves_ctrl.create )
 app.delete('/api/deleteSave/:id', saves_ctrl.delete )
 
-
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build/index.html'))
+})
 
 app.listen(SERVER_PORT, console.log(`IT\'S OVER ${SERVER_PORT}!!!!!`));

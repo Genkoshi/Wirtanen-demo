@@ -49,7 +49,7 @@ export default class Login extends Component {
                 <Logo >
                 </Logo>
 
-                <LoginButton href='http://localhost:9000/auth/'>
+                <LoginButton href={process.env.REACT_APP_LOGIN}>
                     Log in button
                 </LoginButton>
             </Background>
