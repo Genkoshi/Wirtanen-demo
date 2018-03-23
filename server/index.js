@@ -87,7 +87,7 @@ app.get('/api/saves/:id', saves_ctrl.getAll )
 app.get('/api/mostRecentSave/:id', saves_ctrl.getNewest)
 app.put('/api/updateSave/:saveID/:userID', saves_ctrl.update )
 app.post('/api/save/:id', saves_ctrl.create )
-app.delete('/api/deleteSave/:id', saves_ctrl.delete )
+app.delete('/api/deleteSave/:saveID/:userID', saves_ctrl.delete )
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../build/index.html'))

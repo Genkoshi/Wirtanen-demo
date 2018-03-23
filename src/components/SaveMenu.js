@@ -3,8 +3,12 @@ import 'glamor/reset';
 import glamorous from 'glamorous';
 import {connect} from 'react-redux';
 import {css} from 'glamor';
-import {getSaves, addSave, replaceSave} from '../ducks/save_reducer';
+import {addSave, replaceSave} from '../ducks/save_reducer';
 import axios from 'axios';
+import svSound from './sounds/select.mp3';
+import delSaveSound from './sounds/logout.mp3';
+import hvrSound from './sounds/hover2.mp3';
+
 
 function SaveMenu(props){
     const Wrapper = glamorous.div({
@@ -71,25 +75,44 @@ function SaveMenu(props){
     let saveList = saves.map((save, index) => {
         let timeStamp = new Date(save.time_stamped);
         let {firstName, lastName} = save.save_load
+        let saveSound = new Audio(svSound);
+        let deleteSound = new Audio(delSaveSound);
         return (
-            <SaveBox onClick={() => updateSave(save.id, user.id, gameState, replaceSave)} className={`${oldSave}`} key={index} >
-                <div style={{marginBottom: '10px'}}>Save {index +1}</div>
-                <div>{firstName} {lastName} {timeStamp.toLocaleString()}</div>
-                <DeleteButton onClick={(e) => deleteSave(user, save.id, getSaves, e)} >X</DeleteButton>
-                {console.log(save)}
+            <SaveBox 
+                onClick={() => updateSave(save.id, user.id, gameState, replaceSave)} 
+                className={`${oldSave}`} 
+                key={index}
+                onMouseUp={() => saveSound.play()}
+                onMouseEnter={() => {
+                    let hoverSound = new Audio(hvrSound);
+                    hoverSound.volume = 0.5;
+                    hoverSound.play();
+                }}
+            >
+                    <div style={{marginBottom: '10px'}}>Save {index +1}</div>
+                    <div>{firstName} {lastName} {timeStamp.toLocaleString()}</div>
+                    <DeleteButton onMouseUp={(e) => {e.stopPropagation();deleteSound.play()}} onClick={(e) => deleteSave(user, save.id, getSaves, replaceSave, e)} >X</DeleteButton>
             </SaveBox>)
     })
     
     return (
         <Wrapper>
             {saveList}
-            <SaveBox onClick={() => createSave(user.id, gameState, addSave)} className={`${newSave}`} >New Save</SaveBox>
+            <SaveBox onClick={() => {
+                    let saveSound = new Audio(svSound);
+                    saveSound.play();
+                    createSave(user.id, gameState, addSave)}} 
+                className={`${newSave}`}
+                onMouseEnter={() => {
+                    let hoverSound = new Audio(hvrSound);
+                    hoverSound.volume = 0.5;
+                    hoverSound.play();
+                }} >New Save</SaveBox>
         </Wrapper>
     )
 }
 
 const actions = {
-    getSaves,
     addSave,
     replaceSave
 }
@@ -107,11 +130,11 @@ function createSave(id, state, addSave){
      })
  }
 
- function deleteSave(user, saveID, getSaves, e){
+ function deleteSave(user, saveID, getSaves, replaceSave, e){
     e.stopPropagation();
-    axios.delete(`/api/deleteSave/${saveID}`)
+    axios.delete(`/api/deleteSave/${saveID}/${user.id}`)
     .then(res => {
-        getSaves(user.id)
+        replaceSave(res.data)
     })
  }
 

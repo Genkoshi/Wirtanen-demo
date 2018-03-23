@@ -7,12 +7,28 @@ import Navbar from './Navbar';
 import {css} from 'glamor';
 import map from './art/map-no-back.png';
 import {withRouter} from 'react-router-dom';
-import {getSaves} from '../ducks/save_reducer'
+import {getSaves} from '../ducks/save_reducer';
+import mapMusic from './music/map-theme.mp3';
 
 class GameMap extends Component{
 
+    constructor(){
+        super()
+
+        this.mapTheme = new Audio(mapMusic);
+        this.mapTheme.loop = true;
+        this.mapTheme.volume = 0.2;
+        this.mapTheme.currentTime = 11.5;
+    }
+
     componentWillMount(){
-        this.props.getSaves(this.props.user.id)
+        
+        this.props.getSaves(this.props.user.id);
+        this.mapTheme.play()
+    }
+
+    componentWillUnmount(){
+        this.mapTheme.pause();
     }
     
     componentSelect = (name) => {

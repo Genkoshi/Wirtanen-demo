@@ -29,7 +29,7 @@ export default function reducer(state = initialState, action){
 
 export function getUser(){
     let userData=axios.get('/auth/me').then(res => {
-        return typeof res.data === 'object' ? res.data : null ;
+        return typeof res.data === 'object' ? res.data : undefined ;
     })
     return {
         type: GET_USER,

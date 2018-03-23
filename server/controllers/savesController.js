@@ -39,8 +39,8 @@ module.exports = {
         const db = req.app.get('db');
         const {params} = req
 
-        db.delete_save([params.id])
-        .then(() => res.status(200).send())
+        db.delete_save([params.saveID, params.userID])
+        .then((saves) => res.status(200).send(saves))
         .catch(() => res.status(500).send())
     } ,
 }

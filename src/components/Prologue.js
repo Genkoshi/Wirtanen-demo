@@ -5,6 +5,7 @@ import glamorous from 'glamorous';
 import CharacterName from './CharacterName';
 import CharSelect from './CharSelect';
 import {connect} from 'react-redux';
+import prologueTheme from './music/prologue.mp3';
 
 
 class Prologue extends Component{
@@ -19,10 +20,23 @@ class Prologue extends Component{
                 <div>End of testing exposition!</div>,
                 <CharacterName></CharacterName>,
                 <CharSelect></CharSelect>
-
             ]
         }
+        this.prologueMusic = new Audio(prologueTheme);
+        this.prologueMusic.volume = 0.4;
+        this.prologueMusic.currentTime = 70;
     }
+
+    loopTheme = () => {
+        if (this.prologueMusic.currentTime > 177.5){
+            this.prologueMusic.pause();
+            this.prologueMusic.currentTime = 70;
+            this.prologueMusic.play();
+        }
+        console.clear();
+        console.log(this.prologueMusic.currentTime)
+    }
+
     dialogueInc = () => {
             this.setState({
                 dialoguePlace: this.state.dialoguePlace + 1
@@ -55,10 +69,15 @@ class Prologue extends Component{
     componentDidMount() {
         document.addEventListener("keydown", this.onKeyPress, false);
         document.addEventListener("mousedown", this.onMouseDown, false);
+        this.prologueMusic.play();
+        this.interval = setInterval(this.loopTheme, 500);
+
       }
       componentWillUnmount() {
         document.removeEventListener("keydown", this.onKeyPress, false);
         document.removeEventListener("mousedown", this.onMouseDown, false);
+        this.prologueMusic.pause();
+        clearInterval(this.interval);
       }
     
 

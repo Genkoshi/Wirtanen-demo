@@ -8,9 +8,9 @@ import {getSaves} from '../ducks/save_reducer.js';
 import {updateState, resetGame} from '../ducks/game_reducer';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
-import logo from './art/logo.png'
-
-
+import logo from './art/logo.png';
+import hvrSound from './sounds/hover2.mp3';
+import mainMenuTheme from './music/elevator.mp3';
 
 class Start extends Component{
     constructor(){
@@ -18,10 +18,18 @@ class Start extends Component{
 
         this.state = {
         }
+        this.startTheme = new Audio(mainMenuTheme);
+        this.startTheme.loop = true;
+        this.startTheme.volume = 0.2;
     }
 
     componentWillMount(){
-        this.props.getSaves(this.props.user.id)
+        this.props.getSaves(this.props.user.id);
+        this.startTheme.play();
+        
+    }
+    componentWillUnmount(){
+        this.startTheme.pause();
     }
 
     menuItemWhite(index){
@@ -44,7 +52,7 @@ class Start extends Component{
             this.props.updateState(res.data[0].save_load);
         })
     }
-
+    
     render(){
         const {user} = this.props;
         const flexCenter = css({
@@ -61,7 +69,8 @@ class Start extends Component{
         })
 
         const MenuOptions = glamorous.div({
-            minWidth: '700px',
+            minWidth: '500px',
+            minHeight: '405px',
             paddingTop: '20px',
             paddingBottom: '20px',
             backgroundColor: 'black',
@@ -72,8 +81,8 @@ class Start extends Component{
             borderRadius: '25px',
         })
         const Logo = glamorous.div({
-            minWidth: '700px',
-            minHeight: '400px',
+            minWidth: '500px',
+            minHeight: '250px',
             backgroundImage: `url(${logo})`,      
             backgroundSize: 'cover',                  
             borderRadius: '10px',
@@ -86,24 +95,56 @@ class Start extends Component{
             marginBottom: '20px',
             cursor: 'pointer',
             userSelect: 'none',
+            transition: '.5s',
+            ':hover':{
+                color: 'red',
+                fontSize: '65px'
+            }
         })
         return(
             <Background className={`${flexCenter}`}>
                     <Logo></Logo>
                     <MenuOptions className={`${flexCenter}`}>
                             {typeof this.props.saves !== 'undefined' && this.props.saves.length > 0 ?
-                            <MenuItem onMouseUp={() => { this.getMostRecent(user.id).then(res => this.props.history.push('/map'))}} >Continue</MenuItem>
+                            <MenuItem onMouseEnter={() => {
+                                let hoverSound = new Audio();
+                                    hoverSound.src = hvrSound;
+                                    hoverSound.volume = 0.5;
+                                hoverSound.play()
+                            }} onMouseUp={() => { this.getMostRecent(user.id).then(res => this.props.history.push('/map'))}} >Continue</MenuItem>
                             : null}
                             
-                            <MenuItem onMouseUp={() => { this.props.resetGame();this.props.history.push('/prologue')}} >New Game</MenuItem>
+                            <MenuItem onMouseEnter={() =>{
+                                let hoverSound = new Audio();
+                                hoverSound.src = hvrSound;
+                                hoverSound.volume = 0.5;
+                                 hoverSound.play()}
+                                } onMouseUp={() => { this.props.resetGame();this.props.history.push('/prologue')}} >New Game</MenuItem>
 
                             {typeof this.props.saves !=='undefined' && this.props.saves.length > 0 ? 
-                            <MenuItem>Load</MenuItem>
+                            <MenuItem onMouseEnter={() => {
+                                let hoverSound = new Audio();
+                                    hoverSound.src = hvrSound;
+                                    hoverSound.volume = 0.5;
+                                hoverSound.play()
+                            }}>Load</MenuItem>
                             : null}
 
-                            <MenuItem>Options</MenuItem>
+                            <MenuItem onMouseEnter={() => {
+                                let hoverSound = new Audio();
+                                    hoverSound.src = hvrSound;
+                                    hoverSound.volume = 0.5;
+                                hoverSound.play()
+                            }}>Options</MenuItem>
 
-                            <a style={{textDecoration: 'none', color: 'white'}} href={process.env.REACT_APP_LOGOUT} ><MenuItem>Exit</MenuItem></a>
+                            <a style={{textDecoration: 'none', color: 'white'}} href={process.env.REACT_APP_LOGOUT} >
+                                <MenuItem onMouseEnter={() =>{
+                                    let hoverSound = new Audio();
+                                    hoverSound.src = hvrSound;
+                                    hoverSound.volume = 0.5;
+                                     hoverSound.play()
+                                     }}>Exit</MenuItem>
+                            </a>
                     </MenuOptions>
                     {console.log(this.props.user, this.props.saves)}
             </Background>

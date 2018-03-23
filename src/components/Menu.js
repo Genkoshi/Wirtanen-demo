@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {resetGame} from '../ducks/game_reducer.js';
 import {withRouter, Link} from 'react-router-dom';
 import {css} from 'glamor';
+import hvrSound from './sounds/hover2.mp3';
 
 function Menu(props){
     const Wrapper = glamorous.div({
@@ -41,7 +42,7 @@ function Menu(props){
         display: 'inline-block',
     })
     const hoverChange = css({
-        transition: '.7s',
+        transition: '.5s',
         ':hover':{
             fontSize: '65px',
             color: 'gold'
@@ -50,17 +51,37 @@ function Menu(props){
 
     return (
         <Wrapper>
-            <MenuItem>
+            <MenuItem onMouseEnter={() => {
+                let hoverSound = new Audio(hvrSound);
+                hoverSound.volume = 0.5;
+                hoverSound.play();
+            }}>
                 <Link onClick={props.resetGame} className={`${resetLink} ${hoverChange}`} to='/prologue'>New Game</Link>
             </MenuItem>
 
-            <MenuItem className={`${hoverChange}`}>Load</MenuItem>
+            <MenuItem onMouseEnter={() => {
+                let hoverSound = new Audio(hvrSound);
+                hoverSound.volume = 0.5;
+                hoverSound.play();
+            }} className={`${hoverChange}`}>Load</MenuItem>
 
-            <MenuItem className={`${hoverChange}`}>Config</MenuItem>
+            <MenuItem onMouseEnter={() => {
+                let hoverSound = new Audio(hvrSound);
+                hoverSound.volume = 0.5;
+                hoverSound.play();
+            }} className={`${hoverChange}`}>Config</MenuItem>
 
-            <MenuItem onClick={() => props.history.push('/start')} className={`${hoverChange}`} >Main Menu</MenuItem>
+            <MenuItem onMouseEnter={() => {
+                let hoverSound = new Audio(hvrSound);
+                hoverSound.volume = 0.5;
+                hoverSound.play();
+            }} onClick={() => props.history.push('/start')} className={`${hoverChange}`} >Main Menu</MenuItem>
             
-            <MenuItem>
+            <MenuItem onMouseEnter={() => {
+                let hoverSound = new Audio(hvrSound);
+                hoverSound.volume = 0.5;
+                hoverSound.play();
+            }}>
                 <a className={`${resetLink} ${hoverChange}`} href={process.env.REACT_APP_LOGOUT} >Logout</a>
             </MenuItem>
         </Wrapper>
