@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import 'glamor/reset';
 import glamorous, { Div } from 'glamorous';
 import { connect } from 'react-redux';
-import library from './pics/library-2.jpg';
+import library from '../pics/library-2.jpg';
 import Typed from 'react-typed';
 
 class Scene extends Component {

@@ -4,7 +4,7 @@ import Login from './components/Login';
 import GameMap from './components/GameMap';
 import Prologue from './components/Prologue';
 import Start from './components/Start';
-import Scene from './components/Scene';
+import Scene from './components/scenes/Scene';
 import Authorize from './components/Authorize';
 
 
