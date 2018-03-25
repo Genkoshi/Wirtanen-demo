@@ -20,7 +20,7 @@ class Loading extends Component{
         width: '100%',
         height: '100vh'
     })
-    const {component: Component, ...rest} = this.props
+    const {component: Component} = this.props
     let afterAuthDone = () => {
         switch(true){
             case user === undefined:

@@ -33,8 +33,6 @@ class Prologue extends Component{
             this.prologueMusic.currentTime = 70;
             this.prologueMusic.play();
         }
-        console.clear();
-        console.log(this.prologueMusic.currentTime)
     }
 
     dialogueInc = () => {

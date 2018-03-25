@@ -4,13 +4,14 @@ import {connect} from 'react-redux';
 import {updateGender} from '../ducks/game_reducer';
 import glamorous from 'glamorous';
 import {withRouter} from 'react-router-dom';
+import male from './art/male-protag.png';
+import female from './art/female-protag.png';
 
 function CharSelect(props){
     let {history,updateGender} = props;
     const Wrapper = glamorous.div({
-        height: '750px',
+        height: '850px',
         width: '1350px',
-        marginTop: '100px',
     })
     const Title = glamorous.div({
         width: '100%',
@@ -24,25 +25,34 @@ function CharSelect(props){
         width: '100%',
         height: '100%',
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
     })
     const Char = glamorous.div({
         height: '85%',
         width: '30%',
-        transition: '0.7s',
-        cursor: 'pointer',
-        filter: 'brightness(50%)',
-        ':hover':{
-            filter: 'brightness(100%)'
+        display: 'flex',
+        justifyContent: 'center',
+        '& img':{
+            transition: '0.7s',
+            cursor: 'pointer',
+            maxWidth: '430px',
+            maxHeight: '600px',
+            filter: 'brightness(20%)',
+            ':hover':{
+            filter: 'brightness(100%)',
+            bottom: '50px',
+            }
         },
     }, gender => {
         if(gender.male){
             return {
-                backgroundColor: 'red'
+                // background: `url(${male}) no-repeat`,
+                backgroundSize: 'contain',
             }
         }else{
             return {
-                backgroundColor: 'pink'
+                // background: `url(${female}) no-repeat`,
+                backgroundSize: 'contain',
             }
         }
     })
@@ -50,8 +60,12 @@ function CharSelect(props){
         <Wrapper>
             <Title>Select Your Character</Title>
             <CharHolder>
-                <Char male onClick={() => {updateGender('male'); history.push('/map')}}></Char>
-                <Char onClick={() => {updateGender('female'); history.push('/map')}} ></Char>
+                <Char male onClick={() => {updateGender('male'); history.push('/map')}}>
+                    <img src={male} />
+                </Char>
+                <Char onClick={() => {updateGender('female'); history.push('/map')}} >
+                    <img src={female} /> 
+                </Char>
                 {console.log(props.gender, props.firstName, props.lastName)}
             </CharHolder>
         </Wrapper>

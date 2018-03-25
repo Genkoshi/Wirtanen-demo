@@ -6,6 +6,14 @@ import Menu from './Menu';
 import SaveMenu from './SaveMenu';
 
 export default class Navbar extends React.Component{
+    constructor(){
+        super()
+
+        this.state = {
+            visibleS: false,
+            visibleM: false
+        }
+    }
     
     render(){
     const center = css({
@@ -42,7 +50,6 @@ export default class Navbar extends React.Component{
         cursor: 'pointer',
         userSelect: 'none',
         ':hover > div': {
-            visibility: 'visible',
             opacity: 1,
         },
         ':hover':{
@@ -53,15 +60,19 @@ export default class Navbar extends React.Component{
     return (
         <Navbar>
             <div style={{display: 'inline-block', felxDirection: 'column'}} >
-            <MenuButton className={`${center}`} >
+            <MenuButton onMouseEnter={() => this.setState({visibleM: true})}
+                        onMouseLeave={() => this.setState({visibleM: false})} 
+                        className={`${center}`} >
                 Menu
-             <Menu />
+             {this.state.visibleM ? <Menu /> : null}
             </MenuButton>
             </div>
             <Logo />
-            <MenuButton className={`${center}`} >
+            <MenuButton onMouseEnter={() => this.setState({visibleS: true})}
+                        onMouseLeave={() => this.setState({visibleS: false})} 
+                        className={`${center}`} >
                 Save
-                <SaveMenu />
+                {this.state.visibleS ? <SaveMenu/> : null}
             </MenuButton>
         </Navbar>
     )

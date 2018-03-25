@@ -1,5 +1,4 @@
 import axios from 'axios';
-import {updateState} from './game_reducer';
 
 const GET_SAVES = 'GET_SAVES'
     , GET_USER = 'GET_USER'

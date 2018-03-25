@@ -9,10 +9,85 @@ import svSound from './sounds/select.mp3';
 import delSaveSound from './sounds/logout.mp3';
 import hvrSound from './sounds/hover2.mp3';
 
+const oldSave = css({
+    backgroundColor: 'rgb(232, 193, 0)',
+})
+
+const DeleteButton = glamorous.div({
+    backgroundColor: 'black',
+    color: 'white',
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    padding: '5px',
+    borderRadius: '5px',
+    zIndex: '25',
+    ':hover':{
+        color: 'red'
+    }
+})
+
+const SaveBox = glamorous.div({
+    minHeight: '110px',
+    width: '350px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: '20px',
+    cursor: 'pointer',
+    position: 'relative',
+    transition: '.5s',
+    fontSize: 'initial',
+    borderRadius: '5px',
+    ':hover':{
+        filter: 'brightness(120%)'
+    }
+})
+
+export var saveList = (props, saving) => {
+
+    const {saves, gameState, getSaves, user, replaceSave, updateState, bgmVol, bgmMute} = props;    
+    
+    let saveSound = new Audio(svSound);
+    saveSound.volume = (bgmVol/10) || 0.5 ;
+    saveSound.muted = bgmMute || false;
+
+    let deleteSound = new Audio(delSaveSound);
+    deleteSound.volume = (bgmVol/10) || 0.5 ;
+    deleteSound.muted = bgmMute || false;
+
+    return (saves.map((save, index) => {
+        let timeStamp = new Date(save.time_stamped);
+        let {firstName, lastName} = save.save_load
+
+        return (
+            <SaveBox 
+                onClick={() => 
+                            { 
+                                if(saving){updateSave(save.id, user.id, gameState, replaceSave)}
+                                else{updateState(save.save_load); props.history.push('/map') }
+                            }
+                        } 
+                className={`${oldSave}`} 
+                key={index}
+                onMouseUp={() => saveSound.play()}
+                onMouseEnter={() => {
+                    let hoverSound = new Audio(hvrSound);
+                    hoverSound.volume = (bgmVol/10) || 0.5;
+                    hoverSound.muted = bgmMute || false;
+                    hoverSound.play();
+                }}
+            >
+                    <div style={{marginBottom: '10px'}}>Save {index +1}</div>
+                    <div>{firstName} {lastName} {timeStamp.toLocaleString()}</div>
+                    <DeleteButton onMouseUp={(e) => {e.stopPropagation();deleteSound.play()}} onClick={(e) => deleteSave(user, save.id, getSaves, replaceSave, e)} >X</DeleteButton>
+            </SaveBox>)
+}))}
+
 
 function SaveMenu(props){
     const Wrapper = glamorous.div({
-        visibility: 'hidden',
         opacity: 0,
         backgroundColor: '#db1e1e',
         height: '450px',
@@ -23,31 +98,11 @@ function SaveMenu(props){
         borderRadius: '20px',
         borderTopRightRadius: '0',
         position: 'absolute',
-        transition: 'visibility .4s linear, opacity .4s linear',
+        transition: 'opacity .4s linear',
         top: '60px',
         right: '20px',
         cursor: 'default',
         overflowY: 'scroll'
-    })
-
-    const SaveBox = glamorous.div({
-        minHeight: '110px',
-        width: '350px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginBottom: '20px',
-        cursor: 'pointer',
-        position: 'relative',
-        transition: '.5s',
-        ':hover':{
-            filter: 'brightness(120%)'
-        }
-    })
-
-    const oldSave = css({
-        backgroundColor: '#C4C4C4',
     })
 
     const newSave = css({
@@ -56,48 +111,11 @@ function SaveMenu(props){
         color: '#FF6666'
     })
 
-    const DeleteButton = glamorous.div({
-        backgroundColor: 'black',
-        color: 'white',
-        position: 'absolute',
-        top: 5,
-        right: 5,
-        padding: '5px',
-        borderRadius: '5px',
-        zIndex: '25',
-        ':hover':{
-            color: 'red'
-        }
-    })
-
-    const {saves, gameState, getSaves, addSave, user, replaceSave} = props;
-
-    let saveList = saves.map((save, index) => {
-        let timeStamp = new Date(save.time_stamped);
-        let {firstName, lastName} = save.save_load
-        let saveSound = new Audio(svSound);
-        let deleteSound = new Audio(delSaveSound);
-        return (
-            <SaveBox 
-                onClick={() => updateSave(save.id, user.id, gameState, replaceSave)} 
-                className={`${oldSave}`} 
-                key={index}
-                onMouseUp={() => saveSound.play()}
-                onMouseEnter={() => {
-                    let hoverSound = new Audio(hvrSound);
-                    hoverSound.volume = 0.5;
-                    hoverSound.play();
-                }}
-            >
-                    <div style={{marginBottom: '10px'}}>Save {index +1}</div>
-                    <div>{firstName} {lastName} {timeStamp.toLocaleString()}</div>
-                    <DeleteButton onMouseUp={(e) => {e.stopPropagation();deleteSound.play()}} onClick={(e) => deleteSave(user, save.id, getSaves, replaceSave, e)} >X</DeleteButton>
-            </SaveBox>)
-    })
+    const { gameState, user, bgmVol, bgmMute, addSave} = props;
     
     return (
         <Wrapper>
-            {saveList}
+            {saveList(props, true)}
             <SaveBox onClick={() => {
                     let saveSound = new Audio(svSound);
                     saveSound.play();
@@ -105,7 +123,8 @@ function SaveMenu(props){
                 className={`${newSave}`}
                 onMouseEnter={() => {
                     let hoverSound = new Audio(hvrSound);
-                    hoverSound.volume = 0.5;
+                    hoverSound.volume = (bgmVol/10) || 0.5;
+                    hoverSound.muted = bgmMute || false
                     hoverSound.play();
                 }} >New Save</SaveBox>
         </Wrapper>
@@ -142,7 +161,9 @@ function mapStateToProps(state){
     return {
         user: state.save.user,
         saves: state.save.saves,
-        gameState: state.game
+        gameState: state.game,
+        bgmVol: state.game.bgmVolume,
+        bgmMute: state.game.bgmMute
     }
 }
 
