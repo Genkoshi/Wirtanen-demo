@@ -8,7 +8,9 @@ const UPDATE_FIRST = 'UPDATE_FIRST'
     , UPDATE_BGM_VOL = 'UPDATE_BGM_VOL'
     , UPDATE_TEXT_SPEED = 'UPDATE_TEXT_SPEED'
     , UPDATE_MUSIC_MUTE = 'UPDATE_MUSIC_MUTE'
-    , UPDATE_BGM_MUTE = 'UPDATE_BGM_MUTE';
+    , UPDATE_BGM_MUTE = 'UPDATE_BGM_MUTE'
+    , UPDATE_CHOICES = 'UPDATE_CHOICES'
+    , UPDATE_GRID = 'UPDATE_GRID';
 
 export default function reducer(state = initialState, action){
     switch(action.type){
@@ -44,6 +46,12 @@ export default function reducer(state = initialState, action){
         
         case UPDATE_BGM_MUTE:
             return Object.assign({}, state, {bgmMute: action.payload});
+        
+        case UPDATE_CHOICES:
+            return Object.assign({}, state, {choices: action.payload});
+
+        case UPDATE_GRID:
+            return Object.assign({}, state, {gridArea: action.payload})
 
         default: return state;
     }
@@ -117,12 +125,24 @@ export function updateBgmMute(bool){
         payload: bool
     }
 }
+export function updateChoices(float){
+    return {
+        type: UPDATE_CHOICES,
+        payload: float,
+    }
+}
+export function updateGrid(newGrid){
+    return {
+        type: UPDATE_GRID,
+        payload: newGrid
+    }
+}
 
 const initialState = {
-     choicesCounter: 0,
+     choices: 0,
      gender: '',
-     firstName: 'Main',
-     lastName: 'Character',
+     firstName: '',
+     lastName: '',
      musicVolume: 5,
      bgmVolume: 5,
      bgmMute: false,

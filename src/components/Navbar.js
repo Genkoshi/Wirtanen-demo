@@ -67,7 +67,7 @@ export default class Navbar extends React.Component{
              {this.state.visibleM ? <Menu /> : null}
             </MenuButton>
             </div>
-            <Logo />
+            {/* <Logo>  </Logo> */}
             <MenuButton onMouseEnter={() => this.setState({visibleS: true})}
                         onMouseLeave={() => this.setState({visibleS: false})} 
                         className={`${center}`} >

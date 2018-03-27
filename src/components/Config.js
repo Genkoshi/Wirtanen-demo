@@ -85,7 +85,7 @@ class Config extends React.Component{
                 </div>
                 <div>
                     <h3>Text Speed</h3> 
-                    <input className={`${this.sliderStyle(false)}`} onChange={(e) => updateTextSpeed(e.target.value)} type='range' min='0' max='50' value={textSpeed} step='5' style={{direction: 'rtl'}} ></input>
+                    <input className={`${this.sliderStyle(false)}`} onChange={(e) => updateTextSpeed(e.target.value)} type='range' min='0' max='30' value={textSpeed} step='1' style={{direction: 'rtl'}} ></input>
                 </div>
                 {console.log(musicVolume/10)}
                 {console.log(bgmVolume/10)}

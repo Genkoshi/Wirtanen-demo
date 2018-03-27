@@ -12,7 +12,7 @@ import mapMusic from './music/map-theme.mp3';
 import maleChar from './art/male-protag.png';
 import femaleChar from './art/female-protag.png';
 //replace this later:
-import charPlaceholder from './art/female-protag.png';
+import miya from './art/miya.png';
 
 class GameMap extends Component{
 
@@ -32,6 +32,18 @@ class GameMap extends Component{
     componentWillUnmount(){
         this.mapTheme.pause();
     }
+
+    componentWillReceiveProps(props){
+        let checking = this.mapTheme.volume !== props.musicVol/10 || this.mapTheme.muted !== props.musicMute 
+        this.mapTheme.volume = (props.musicVol/10);
+        this.mapTheme.muted = props.musicMute;
+        console.log(props)
+        if(checking){
+            this.shouldComponentUpdate = () => false
+        }else{
+            this.shouldComponentUpdate = () => true
+        }
+    }
     
     componentSelect = (name) => {
         let character = {
@@ -41,8 +53,8 @@ class GameMap extends Component{
                     top: '50%',
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
-                    width: '70px',
-                    height: '120px', 
+                    width: '82px',
+                    height: '150px', 
                     ':hover':{
                         cursor: 'pointer',
                     }
@@ -59,15 +71,13 @@ class GameMap extends Component{
                             : Object.assign({}, character, {background: `url(${femaleChar}) no-repeat center`})
 
             case 'Miya':
-                return Object.assign({}, character, {background: `url(${charPlaceholder}) no-repeat center`})
+                return Object.assign({}, character, {background: `url(${miya}) no-repeat center`})
             
             default: return {};
         }       
     }
         
     render(){
-        this.mapTheme.muted = this.props.musicMute;
-        this.mapTheme.volume = (this.props.musicVol/10); 
         let {gridArea} = this.props
         const backMap = css({
             height: '655px',
@@ -118,7 +128,7 @@ class GameMap extends Component{
                         let character = this.componentSelect(area.name);
                         return (
                             <Div key={index} className={`${center}`} css={{position: 'relative', gridArea: area.position}}>
-                                <Div onClick={() => this.props.history.push(`/scene/${area.name}`)} css={character} />
+                                <Div onClick={() => area.name !== 'MainCharacter' ? this.props.history.push(`/scene/${area.name}`) : null} css={character} />
                                 {console.log(area.name)}
                             </Div>
                         )

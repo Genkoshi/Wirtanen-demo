@@ -64,7 +64,7 @@ export var saveList = (props, saving) => {
         return (
             <SaveBox 
                 onClick={() => 
-                            { 
+                            { console.log(save)
                                 if(saving){updateSave(save.id, user.id, gameState, replaceSave)}
                                 else{updateState(save.save_load); props.history.push('/map') }
                             }
