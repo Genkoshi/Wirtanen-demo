@@ -19,7 +19,7 @@ import {withRouter} from 'react-router-dom';
 class Scene extends Component {
     constructor(props) {
         super(props)
-
+        
         this.state = {
             dialoguePlace: 0,
             next: false,
@@ -31,16 +31,19 @@ class Scene extends Component {
         this.choiceConfirm.volume = (this.props.state.bgmVolume/10);
         this.choiceConfirm.muted = this.props.state.bgmMute;
     }
-
+    
     componentWillMount() {
         this.setState({
             dialoguePlace: 0,
             character: this.props.match.params.character,
         })
+        this.addKeyPress();
     }
     componentWillUnmount(){
+        this.removeKeyPress();
+        this.props.updateChoices(this.state.choice || this.props.state.choices)   
     }
-
+    
     dialogueInc = () => {
         this.setState({
             dialoguePlace: this.state.dialoguePlace + 1
@@ -54,7 +57,7 @@ class Scene extends Component {
             console.log(this.state.next)
         }
     }
-
+    
     onKeyPress = (event) => {
         if (event.key === 'Enter' || event.keyCode === 32) {
             this.dialogueInc();
@@ -211,11 +214,11 @@ class Scene extends Component {
 
                                     }
                                 }}
-                                strings={[`This should probably be in it's own component per character...`]}
+                                strings={[`A choice must be made!`]}
                                 typeSpeed={this.props.state.textSpeed}
                                 showCursor={false}
                             />,
-                            `This should probably be in it's own component per character...`,
+                            `A choice must be made!`,
                             <Typed
                                 onStringTyped={() => {
                                     if (this.state.dialoguePlace === 2) {
@@ -223,11 +226,11 @@ class Scene extends Component {
 
                                     }
                                 }}
-                                strings={[`A choice has been made!`]}
+                                strings={[`No turning back!!`]}
                                 typeSpeed={this.props.state.textSpeed}
                                 showCursor={false}
                             />,
-                            `A choice has been made!`,
+                            `No turning back!!`,
                         ]; return (
                             <div>
                             {optionOne()}
@@ -246,13 +249,6 @@ class Scene extends Component {
         }
     }
 
-    componentDidMount() {
-        this.addKeyPress();
-    }
-    componentWillUnmount() {
-        this.removeKeyPress();
-        this.props.updateChoices(this.state.choice || this.props.state.choices)
-    }
 
     render() {
         let try1 = this.practiceScene(this.props.state.choices, this.props.match.params.character);
@@ -287,6 +283,7 @@ class Scene extends Component {
             <Background>
                 <MainCharacter></MainCharacter>
                 <Suspect></Suspect>
+                {this.props.gender ? null : this.props.history.push('/start')}
                 {try1}
             </Background>
         )

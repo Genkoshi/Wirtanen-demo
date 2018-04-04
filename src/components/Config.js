@@ -79,7 +79,7 @@ class Config extends React.Component{
                     <MuteButton onClick={() => updateMusicMute(!musicMute)} toggled={musicMute}>Mute</MuteButton>
                 </div>
                 <div>
-                    <h3>BGM</h3>
+                    <h3>Sound Effects</h3>
                     <input className={`${this.sliderStyle(bgmMute)}`} onChange={(e) => bgmMute ? null : updateBGMVol(e.target.value)} type='range' min='1' max='10' value={bgmVolume} step='1' ></input>
                     <MuteButton onClick={() => updateBgmMute(!bgmMute)} toggled={bgmMute}>Mute</MuteButton>
                 </div>

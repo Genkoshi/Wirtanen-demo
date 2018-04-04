@@ -138,6 +138,7 @@ class GameMap extends Component{
             {/* <div className={backMap} />needs to be H:655 W:1520 */}
             {console.log(this.props.name)}
             {console.log(this.props.gender)}
+            {this.props.gender ? null : this.props.history.push('/start')}
             </div>
         )
     }

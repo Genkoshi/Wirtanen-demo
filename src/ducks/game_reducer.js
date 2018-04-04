@@ -20,9 +20,6 @@ export default function reducer(state = initialState, action){
         case UPDATE_LAST:
             return Object.assign({}, state, {lastName: action.payload});
 
-        case RESET_PROLOGUE:
-            return Object.assign({}, state, {prologue: action.payload});
-
         case RESET_GAME:
                 return Object.assign({}, state, initialState)
 
@@ -76,12 +73,6 @@ export function updateLast(name){
     }
 }
 
-export function resetPrologue(){
-    return {
-        type: RESET_PROLOGUE,
-        payload: false
-    }
-}
 export function resetGame(){
     return {
         type:RESET_GAME,

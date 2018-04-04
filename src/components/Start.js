@@ -6,7 +6,6 @@ import {connect} from 'react-redux';
 import {getSaves, replaceSave} from '../ducks/save_reducer.js';
 import {updateState, resetGame} from '../ducks/game_reducer';
 import {withRouter} from 'react-router-dom';
-import axios from 'axios';
 import logo from './art/logo.png';
 import hvrSound from './sounds/hover2.mp3';
 import mainMenuTheme from './music/elevator.mp3';
@@ -59,7 +58,6 @@ class Start extends Component{
     }
     
     render(){
-        const {user} = this.props;
         const flexCenter = css({
             display: 'flex',
             justifyContent: 'center',
@@ -169,7 +167,6 @@ let actions = {
 }
 function mapStateToProps(state){
      return {
-         user: state.save.user,
          saves: state.save.saves,
          gameState: state.game,
      }

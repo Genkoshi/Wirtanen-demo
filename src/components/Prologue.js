@@ -6,6 +6,7 @@ import CharacterName from './CharacterName';
 import CharSelect from './CharSelect';
 import {connect} from 'react-redux';
 import prologueTheme from './music/prologue.mp3';
+import {resetGame} from '../ducks/game_reducer';
 
 
 class Prologue extends Component{
@@ -69,6 +70,7 @@ class Prologue extends Component{
         document.addEventListener("mousedown", this.onMouseDown, false);
         this.prologueMusic.play();
         this.interval = setInterval(this.loopTheme, 500);
+        this.props.resetGame();
 
       }
       componentWillUnmount() {
@@ -162,4 +164,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps)(Prologue)
+export default connect(mapStateToProps, {resetGame})(Prologue)

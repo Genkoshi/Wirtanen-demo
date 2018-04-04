@@ -20,7 +20,7 @@ class App extends Component {
             <Authorize exact path='/scene' component={GameMap} />
             <Authorize path='/prologue' component={Prologue} />
             <Authorize path='/start' component={Start} />
-            <Route path='/scene/:character' component={Scene} />
+            <Route path='/scene/:character' render={() => <Authorize  component={Scene} />}/>
           </Switch>
         </BrowserRouter>
       </div>
